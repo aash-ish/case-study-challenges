@@ -139,34 +139,30 @@ group by pub_name)
 select pub_name, "overall average rating of pubs"," average rating of each pub"
 from cte1, cte2
 where " average rating of each pub">"overall average rating of pubs"
+-- or ANOTHER WAY IS
+select pub_name, avg(rating) as r
+from pubs join ratings using (pub_id)
+group by pub_name
+having avg(rating)> (select avg(rating) from ratings)
 
 --Q9. What is the running total of sales amount for each pub, ordered by the transaction date?
-select pub_name, transaction_date,
-sum(price_per_unit*quantity) over (partition by pub_name order by transaction_date asc) as running_total
+select pub_name, transaction_date, sum(price_per_unit*quantity) as "total amount by transaction date",
+sum(sum(price_per_unit*quantity)) over (partition by pub_name order by transaction_date asc) as running_total
 from pubs join sales using (pub_id) join beverages using (beverage_id)
+group by pub_name, transaction_date
 
 
 --Q10. For each country, what is the average price per unit of beverages in each category, and what is the overall average price per unit of beverages across all categories?
-with cte1 as
-(select country, category, round(avg(price_per_unit)) as "average price in different countries for various beverage categories"
+select category,country, round(avg(price_per_unit),1) as "average price in different countries for various beverage categories",
+ avg(round(avg(price_per_unit),1)) over (partition by category) as "average category price"
  from pubs join sales using (pub_id) join beverages using (beverage_id)
- group by country, category),
- cte2 as 
- (select round(avg(price_per_unit)) as "overall average price for all categories"
- from beverages)
- select country, category, "average price in different countries for various beverage categories", "overall average price for all categories"
- from cte1,cte2
- order by country
+ group by category, country
  
 
 --Q11. For each pub, what is the percentage contribution of each category of beverages to the total sales amount, and what is the pub's overall sales amount?
-with cte1 as 
-(select round(sum(price_per_unit*quantity)) as "total sales amount"
- from beverages join sales using (beverage_id)),
-cte2 as
-(select category, sum(price_per_unit*quantity) as "beverage category amount"
- from beverages join sales using (beverage_id)
- group by category)
- select category, "total sales amount", round(("beverage category amount"/"total sales amount")*100) as "contribution of each beverage category in total sales amount "
- from cte1,cte2
- 
+ select sq.*, (sq."pub_beverage_category_revenue"/sq."pub_revenue")*100 as "contribution"
+ from (select pub_name, category, round(sum(price_per_unit*quantity)) as "pub_beverage_category_revenue",
+ sum(sum(price_per_unit*quantity)) over (partition by pub_name) as "pub_revenue"
+ from beverages join sales using (beverage_id) join pubs using (pub_id)
+ group by pub_name, category) as sq
+ order by pub_name
