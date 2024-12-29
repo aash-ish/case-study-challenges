@@ -1,0 +1,252 @@
+Introduction
+You are a Marketing Analyst
+The ‘Sustainable Clothing Co.’ have been running several marketing campaigns and have asked you to provide your insight into whether they have been successful or not. Analyse the following data and answer the given questions to form your answer.
+
+Tables
+Here are the tables you will be using
+
+1. Sustainable_clothing
+2. Transactions
+3. Marketing_campaigns
+
+Creating Tables
+
+Creating Sustainable_clothing Table
+CREATE TABLE sustainable_clothing (
+product_id INT PRIMARY KEY,
+product_name VARCHAR(100),
+category VARCHAR(50),
+size VARCHAR(10),
+price FLOAT
+);
+Inserting values in Sustainable_clothing Table
+-- Insert data into the table
+INSERT INTO sustainable_clothing (product_id, product_name, category, size, price)
+VALUES
+(1, 'Organic Cotton T-Shirt', 'Tops', 'S', 29.99),
+(2, 'Recycled Denim Jeans', 'Bottoms', 'M', 79.99),
+(3, 'Hemp Crop Top', 'Tops', 'L', 24.99),
+(4, 'Bamboo Lounge Pants', 'Bottoms', 'XS', 49.99),
+(5, 'Eco-Friendly Hoodie', 'Outerwear', 'XL', 59.99),
+(6, 'Linen Button-Down Shirt', 'Tops', 'M', 39.99),
+(7, 'Organic Cotton Dress', 'Dresses', 'S', 69.99),
+(8, 'Sustainable Swim Shorts', 'Swimwear', 'L', 34.99),
+(9, 'Recycled Polyester Jacket', 'Outerwear', 'XL', 89.99),
+(10, 'Bamboo Yoga Leggings', 'Activewear', 'XS', 54.99),
+(11, 'Hemp Overalls', 'Bottoms', 'M', 74.99),
+(12, 'Organic Cotton Sweater', 'Tops', 'L', 49.99),
+(13, 'Cork Sandals', 'Footwear', 'S', 39.99),
+(14, 'Recycled Nylon Backpack', 'Accessories', 'One Size', 59.99),
+(15, 'Organic Cotton Skirt', 'Bottoms', 'XS', 34.99),
+(16, 'Hemp Baseball Cap', 'Accessories', 'One Size', 24.99),
+(17, 'Upcycled Denim Jacket', 'Outerwear', 'M', 79.99),
+(18, 'Linen Jumpsuit', 'Dresses', 'L', 69.99),
+(19, 'Organic Cotton Socks', 'Accessories', 'M', 9.99),
+(20, 'Bamboo Bathrobe', 'Loungewear', 'XL', 69.99);
+--------------------------
+--------------------------
+Creating marketing_campaigns table
+
+CREATE TABLE marketing_campaigns (
+campaign_id INT PRIMARY KEY,
+campaign_name VARCHAR(100),
+product_id INT,
+start_date DATE,
+end_date DATE,
+FOREIGN KEY (product_id) REFERENCES sustainable_clothing (product_id)
+);
+Inserting values in marketing_campaigns table
+-- Insert data into the table
+INSERT INTO marketing_campaigns (campaign_id, campaign_name, product_id, start_date, end_date)
+VALUES
+(1, 'Summer Sale', 2, '2023-06-01', '2023-06-30'),
+(2, 'New Collection Launch', 10, '2023-07-15', '2023-08-15'),
+(3, 'Super Save', 7, '2023-08-20', '2023-09-15');
+--------------------------
+--------------------------
+Creating Transactions Table
+-- Create the table
+CREATE TABLE transactions (
+transaction_id INT PRIMARY KEY,
+product_id INT,
+quantity INT,
+purchase_date DATE,
+FOREIGN KEY (product_id) REFERENCES sustainable_clothing (product_id)
+);
+Inserting values in Transactions Table
+-- Insert data into the table
+INSERT INTO transactions (transaction_id, product_id, quantity, purchase_date)
+VALUES
+(1, 2, 2, '2023-06-02'),
+(2, 14, 1, '2023-06-02'),
+(3, 5, 2, '2023-06-05'),
+(4, 2, 1, '2023-06-07'),
+(5, 19, 2, '2023-06-10'),
+(6, 2, 1, '2023-06-13'),
+(7, 16, 1, '2023-06-13'),
+(8, 10, 2, '2023-06-15'),
+(9, 2, 1, '2023-06-18'),
+(10, 4, 1, '2023-06-22'),
+(11, 18, 2, '2023-06-26'),
+(12, 2, 1, '2023-06-30'),
+(13, 13, 1, '2023-06-30'),
+(14, 4, 1, '2023-07-04'),
+(15, 6, 2, '2023-07-08'),
+(16, 15, 1, '2023-07-08'),
+(17, 9, 2, '2023-07-12'),
+(18, 20, 1, '2023-07-12'),
+(19, 11, 1, '2023-07-16'),
+(20, 10, 1, '2023-07-20'),
+(21, 12, 2, '2023-07-24'),
+(22, 5, 1, '2023-07-29'),
+(23, 10, 1, '2023-07-29'),
+(24, 10, 1, '2023-08-03'),
+(25, 19, 2, '2023-08-08'),
+(26, 3, 1, '2023-08-14'),
+(27, 10, 1, '2023-08-14'),
+(28, 16, 2, '2023-08-20'),
+(29, 18, 1, '2023-08-27'),
+(30, 12, 2, '2023-09-01'),
+(31, 13, 1, '2023-09-05'),
+(32, 7, 1, '2023-09-05'),
+(33, 6, 1, '2023-09-10'),
+(34, 15, 2, '2023-09-14'),
+(35, 9, 1, '2023-09-14'),
+(36, 11, 2, '2023-09-19'),
+(37, 17, 1, '2023-09-23'),
+(38, 2, 1, '2023-09-28'),
+(39, 14, 1, '2023-09-28'),
+(40, 5, 2, '2023-09-30'),
+(41, 16, 1, '2023-10-01'),
+(42, 12, 2, '2023-10-01'),
+(43, 1, 1, '2023-10-01'),
+(44, 7, 1, '2023-10-02'),
+(45, 18, 2, '2023-10-03'),
+(46, 12, 1, '2023-10-03'),
+(47, 13, 1, '2023-10-04'),
+(48, 4, 1, '2023-10-05'),
+(49, 12, 2, '2023-10-05'),
+(50, 7, 1, '2023-10-06'),
+(51, 4, 2, '2023-10-08'),
+(52, 8, 2, '2023-10-08'),
+(53, 16, 1, '2023-10-09'),
+(54, 19, 1, '2023-10-09'),
+(55, 1, 1, '2023-10-10'),
+(56, 18, 2, '2023-10-10'),
+(57, 2, 1, '2023-10-10'),
+(58, 15, 2, '2023-10-11'),
+(59, 17, 2, '2023-10-13'),
+(60, 13, 1, '2023-10-13'),
+(61, 10, 2, '2023-10-13'),
+(62, 9, 1, '2023-10-13'),
+(63, 19, 2, '2023-10-13'),
+(64, 20, 1, '2023-10-14');
+--------------------------
+--------------------------
+Mathew’s challenge 6 Case Study questions and their solutions are given below
+
+Q1. How many transactions were completed during each marketing campaign?
+
+select campaign_name, count(transaction_id) as total_transactions
+from transactions t 
+join marketing_campaigns mc on t.product_id = mc.product_id
+where t.purchase_date between mc.start_date and mc.end_date
+group by campaign_name
+order by total_transactions;
+
+Q2. Which product had the highest sales quantity?
+
+select product_name, sum(quantity) as "total quantity of each product"
+from sustainable_clothing c
+left join transactions t on t.product_id=c.product_id
+group by product_name
+order by "total quantity of each product" desc
+limit 1;
+
+Q3. What is the total revenue generated from each marketing campaign?
+
+select 
+campaign_name, sum(t.quantity * sc.price) as total_revenue 
+from marketing_campaigns mc join sustainable_clothing sc using(product_id) join transactions t using (product_id)
+where t.purchase_date between mc.start_date and mc.end_date
+group by campaign_name 
+
+Q4. . What is the top-selling product category based on the total revenue generated?
+
+select category, round(sum(t.quantity*c.price)) as "revenue of each category"
+from sustainable_clothing c
+left join transactions t on t.product_id=c.product_id
+group by category
+order by "revenue of each category" desc
+limit 1;
+
+Q5. Which products had a higher quantity sold compared to the average quantity sold?
+
+select product_name, sum(quantity) as " more than average quantity sold" 
+from sustainable_clothing c
+left join transactions t on t.product_id=c.product_id
+group by product_name
+having sum(quantity) > avg(quantity);
+
+
+Q6. What is the average revenue generated per day during the marketing campaigns?
+
+select avg(c.price*t.quantity) as "average revenue generated per day during marketing campaign"
+from transactions t
+join sustainable_clothing c on t.product_id=c.product_id
+join marketing_campaigns m on m.product_id=c.product_id
+where t.purchase_date between m.start_date and m.end_date;
+
+Q7. What is the percentage contribution of each product to the total revenue?
+
+with cte1 as (select product_name,
+sum(t.quantity*c.price) as total_product_revenue,
+sum(sum(t.quantity*c.price)) over() as "total revenue"
+from sustainable_clothing c
+join transactions t on t.product_id=c.product_id 
+group by product_name)
+
+select product_name, total_product_revenue, "total revenue", total_product_revenue/"total revenue" as "contribution"
+from cte1
+
+Q8.Compare the average quantity sold during marketing campaigns to outside the marketing campaigns
+
+select 
+         case when mc.campaign_id is not null then 'marketing campaigns' else 'outside marketing campaigns' 
+   end as Ttype,
+         avg(t.quantity) as "average_quantity"
+      from transactions t
+      left join marketing_campaigns mc on t.product_id = mc.product_id
+   group by Ttype;
+
+
+Q9. Compare the revenue generated by products inside the marketing
+
+select 
+   case when mc.campaign_id is not null then 'marketing campaigns'
+   else 'outside marketing campaigns' 
+   end as transaction_type,
+      sum(t.quantity * sc.price) as revenue
+      from transactions t
+      left join marketing_campaigns mc on t.product_id = mc.product_id
+      join sustainable_clothing sc on t.product_id = sc.product_id
+      group by transaction_type
+
+
+Q10. Rank the products by their average daily quantity sold
+
+with cte_avgq as (select product_name, avg(quantity) as "average quantity sold"
+from transactions t
+join sustainable_clothing c on c.product_id=t.product_id
+group by product_name)
+select product_name, "average quantity sold",
+dense_rank() over(order by "average quantity sold" desc) as rank_of_products_by_average_quantity_sold
+from cte_avgq;
+
+--OR without cte you can write query as below
+select product_name, round(avg(quantity),1) as "average quantity sold",
+dense_rank() over(order by round(avg(quantity),1) desc ) as rank_of_products_by_average_quantity_sold
+from transactions t
+join sustainable_clothing c on c.product_id=t.product_id
+group by product_name
+
